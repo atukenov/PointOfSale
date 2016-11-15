@@ -14,16 +14,15 @@ public class Sales {
     private int quantity = 0;
     private int price = 0;
     
-    public Sales(String name, int quantity, int price)
+    public Sales(String name, int quantity)
     {
         this.name = name;
         this.quantity = quantity;
-        this.price = price;
     }
     
     @Override
     public String toString()
     {
-        return name + "\t" + quantity + "\t" + price + "\n";
+        return name + "\t" + quantity + "\t";
     }
 }

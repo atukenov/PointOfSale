@@ -4,13 +4,13 @@ public class Database {
 	List<itemList> db = new ArrayList<itemList>();
 	
 	public Database() {
-		db.add(new itemList(12345, 5, "MacPro", 1299.99));
-		db.add(new itemList(25143, 1, "Alienware 17", 1799.99));
-		db.add(new itemList(41532, 9, "iPhone 10", 999.00));
+		db.add(new itemList(12345, "MacPro", 5, 1299.99));
+		db.add(new itemList(12344, "Alienware 17", 1, 1799.99));
+		db.add(new itemList(41532, "iPhone 10", 9, 999.00));
 	}
 	
-	public void addItem(int ID, int quantity, String itemName, double price) {
-		db.add(new itemList(ID, quantity, itemName, price));
+	public void addItem(int ID, String itemName, int quantity, double price) {
+		db.add(new itemList(ID, itemName, quantity, price));
 	}
 	
 	public int removeItem(int ID) {
@@ -137,24 +137,5 @@ public class Database {
 		}
 		
 		return result;
-	}
-	
-	private static class itemList {
-		int ID;
-		int quantity;
-		String itemName;
-		double price;
-		
-		itemList (int ID, int quantity, String itemName, double price) {
-			this.ID = ID;
-			this.quantity = quantity;
-			this.itemName = itemName;
-			this.price = price;
-		}
-		
-		public String toString() {
-			String result = ID + " " + quantity + " " + itemName + " " + price;
-			return result;
-		}
 	}
 }
