@@ -2,8 +2,6 @@ package pointofsale;
 
 
 import pointofsale.MainPage;
-import pointofsale.ForgotPsswd;
-import pointofsale.NewManagerAcct;
 
 /**
  *

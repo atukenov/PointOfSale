@@ -1,7 +1,6 @@
 package pointofsale;
 
 
-import pointofsale.Sales;
 import java.awt.BorderLayout;
 import java.util.*;
 import javax.swing.*;

@@ -1,10 +1,5 @@
 package pointofsale;
 
-
-
-import pointofsale.Retail;
-import pointofsale.LoginPage;
-
 /**
  *
  * @author bilal
