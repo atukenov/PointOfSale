@@ -17,7 +17,7 @@ public class Database {
 	}
 	
 	public int removeItem(int ID) {
-		Iterator<itemList> iterator = db.iterator();
+            Iterator<itemList> iterator = db.iterator();
 
 	    while (iterator.hasNext()) {
 	      if(iterator.next().ID == ID){
@@ -29,11 +29,11 @@ public class Database {
 	    }
 	    
 	    // Error ID not found.
-		return -1;
+            return -1;
 	}
 	
 	public int getQuantity(int ID) {
-		Iterator<itemList> iterator = db.iterator();
+            Iterator<itemList> iterator = db.iterator();
 
 	    while (iterator.hasNext()) {
 	      itemList iL = iterator.next();
@@ -44,11 +44,11 @@ public class Database {
 	    }
 	    
 	    // Error ID not found.
-		return -1;
+            return -1;
 	}
 	
 	public int setQuantity(int ID, int quantity) {
-		Iterator<itemList> iterator = db.iterator();
+            Iterator<itemList> iterator = db.iterator();
 
 	    while (iterator.hasNext()) {
 	      itemList iL = iterator.next();
@@ -66,7 +66,7 @@ public class Database {
 	}
 	
 	public String getItemName(int ID) {
-		Iterator<itemList> iterator = db.iterator();
+            Iterator<itemList> iterator = db.iterator();
 
 	    while (iterator.hasNext()) {
 	      itemList iL = iterator.next();
@@ -77,11 +77,11 @@ public class Database {
 	    }
 	    
 	    // Error ID not found.
-		return "-1";
+            return "-1";
 	}
 	
 	public int setItemName(int ID, String itemName) {
-		Iterator<itemList> iterator = db.iterator();
+            Iterator<itemList> iterator = db.iterator();
 
 	    while (iterator.hasNext()) {
 	      itemList iL = iterator.next();
@@ -99,7 +99,7 @@ public class Database {
 	}
 	
 	public double getPrice(int ID) {
-		Iterator<itemList> iterator = db.iterator();
+            Iterator<itemList> iterator = db.iterator();
 
 	    while (iterator.hasNext()) {
 	      itemList iL = iterator.next();
@@ -110,11 +110,11 @@ public class Database {
 	    }
 	    
 	    // Error ID not found.
-		return -1;
+            return -1;
 	}
 	
 	public int setPrice(int ID, double price) {
-		Iterator<itemList> iterator = db.iterator();
+            Iterator<itemList> iterator = db.iterator();
 
 	    while (iterator.hasNext()) {
 	      itemList iL = iterator.next();
@@ -132,32 +132,32 @@ public class Database {
 	}
 	
 	public String toString() {
-		Iterator<?> iterator = db.iterator();
-		String result = "";
+            Iterator<?> iterator = db.iterator();
+            String result = "";
 		
-		while (iterator.hasNext()) {
-			result += iterator.next() + "\n";
-		}
+            while (iterator.hasNext()) {
+                result += iterator.next() + "\n";
+            }
 		
-		return result;
+            return result;
 	}
 	
 	private static class itemList {
-		int ID;
-		int quantity;
-		String itemName;
-		double price;
+            int ID;
+            int quantity;
+            String itemName;
+            double price;
 		
-		itemList (int ID, int quantity, String itemName, double price) {
-			this.ID = ID;
-			this.quantity = quantity;
-			this.itemName = itemName;
-			this.price = price;
-		}
+            itemList (int ID, int quantity, String itemName, double price) {
+                this.ID = ID;
+		this.quantity = quantity;
+		this.itemName = itemName;
+		this.price = price;
+            }
 		
-		public String toString() {
-			String result = ID + " " + quantity + " " + itemName + " " + price;
-			return result;
-		}
+            public String toString() {
+		String result = ID + " " + quantity + " " + itemName + " " + price;
+		return result;
+            }
 	}
 }

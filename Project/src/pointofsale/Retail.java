@@ -2,6 +2,7 @@ package pointofsale;
 
 
 import java.awt.BorderLayout;
+import java.awt.event.WindowEvent;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -104,6 +105,11 @@ public class Retail extends javax.swing.JFrame {
         jLabel5.setText("Total:");
 
         jButton1.setText("Complete");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Back");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -212,8 +218,14 @@ public class Retail extends javax.swing.JFrame {
     }//GEN-LAST:event_AddButtonActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        //setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.dispose();
         new MainPage().setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        JOptionPane.showMessageDialog(null, "Complete", "DIBAT", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
