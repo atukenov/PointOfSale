@@ -6,6 +6,7 @@ package pointofsale;
  */
 public class MainPage extends javax.swing.JFrame {
     
+    private static Database db = Base.db;
     /**
      * Creates new form test
      */
@@ -27,6 +28,8 @@ public class MainPage extends javax.swing.JFrame {
         jToggleButton1 = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocation(new java.awt.Point(100, 100));
+        setLocationByPlatform(true);
 
         jLabel1.setFont(new java.awt.Font("Comic Sans MS", 3, 14)); // NOI18N
         jLabel1.setText("Please Choose Your Account Type");
@@ -73,7 +76,8 @@ public class MainPage extends javax.swing.JFrame {
                 .addContainerGap(71, Short.MAX_VALUE))
         );
 
-        pack();
+        setSize(new java.awt.Dimension(393, 250));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -114,7 +118,6 @@ public class MainPage extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

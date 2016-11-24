@@ -12,7 +12,7 @@ public class Database {
 		db.add(new itemList(41532, 9, "iPhone 10", 999.00));
 	}
 	
-	public void addItem(int ID, int quantity, String itemName, double price) {
+	public void addItem(int ID, String itemName, int quantity, double price) {
 		db.add(new itemList(ID, quantity, itemName, price));
 	}
 	
@@ -32,6 +32,33 @@ public class Database {
             return -1;
 	}
 	
+        public void decreaseQuantity(int ID, int quantity)
+        {
+            Iterator<itemList> iterator = db.iterator();
+
+	    while (iterator.hasNext()) {
+	      itemList iL = iterator.next();
+	      
+	      if(iL.ID == ID){
+                  iL.quantity -= quantity;
+	      }
+	    }
+        }
+        
+        public ArrayList<Integer> getList()
+        {
+            ArrayList<Integer> list = new ArrayList<>();
+            Iterator <itemList> it = db.iterator();
+            
+            while (it.hasNext())
+            {
+                itemList number = it.next();
+                int id = number.ID;
+                list.add(id);
+            }
+            return list;
+        }
+        
 	public int getQuantity(int ID) {
             Iterator<itemList> iterator = db.iterator();
 
@@ -78,6 +105,21 @@ public class Database {
 	    
 	    // Error ID not found.
             return "-1";
+	}
+        
+        public int getID(String name) {
+            Iterator<itemList> iterator = db.iterator();
+
+	    while (iterator.hasNext()) {
+	      itemList iL = iterator.next();
+	      
+	      if(iL.itemName.equals(name)){
+	    	  return iL.ID;
+	      }
+	    }
+	    
+	    // Error ID not found.
+            return -1;
 	}
 	
 	public int setItemName(int ID, String itemName) {
@@ -138,10 +180,14 @@ public class Database {
             while (iterator.hasNext()) {
                 result += iterator.next() + "\n";
             }
-		
+            
             return result;
 	}
-	
+        
+        public int getSize() {
+            return db.size();
+        }
+        
 	private static class itemList {
             int ID;
             int quantity;
