@@ -5,6 +5,8 @@
  */
 package pointofsale;
 
+import javax.swing.JTable;
+
 /**
  *
  * @author AlmazTukenov

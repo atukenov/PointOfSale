@@ -12,6 +12,7 @@ public class LoginPage extends javax.swing.JFrame {
     
     private static String USER = "admin";
     private static String PASS = "admin";
+    private static ManagerRetail Window;
     /**
      * Creates new form test2
      */

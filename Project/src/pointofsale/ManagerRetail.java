@@ -19,11 +19,26 @@ public class ManagerRetail extends javax.swing.JFrame {
     public static int sz = 0;
     private static Database db = Base.db;
     private static DefaultTableModel model;
+    interface Click {
+        void onClick();
+    }
     /**
      * Creates new form ManagerRetail
      */
-    
-           
+   
+    public static void Refresh()
+    {
+        ArrayList<Integer> list = db.getList();
+        for (int i = sz; i < list.size(); ++i)
+        {
+            int id = list.get(i);
+            String name = db.getItemName(id);
+            double price1 = db.getPrice(id);
+            int quantity = db.getQuantity(id);
+            model.addRow(new Object[] {id, name, quantity, price1});
+            sz++;
+        }     
+    }
     
     public ManagerRetail() {
         initComponents();
@@ -34,18 +49,10 @@ public class ManagerRetail extends javax.swing.JFrame {
         Table.getColumnModel().getColumn(2).setCellRenderer( centerRenderer );
         Table.getColumnModel().getColumn(3).setCellRenderer( centerRenderer );
         model = (DefaultTableModel) Table.getModel();
-        
-        ArrayList<Integer> list = db.getList();
-        for (int i = 0; i < list.size(); ++i)
-        {
-            int id = list.get(i);
-            String name = db.getItemName(id);
-            double price1 = db.getPrice(id);
-            int quantity = db.getQuantity(id);
-            model.addRow(new Object[] {id, name, quantity, price1});
-            sz++;
-        }       
+        sz = 0;
+        Refresh();
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -61,7 +68,7 @@ public class ManagerRetail extends javax.swing.JFrame {
         Save = new javax.swing.JButton();
         Home = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        AddNewItem = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -106,10 +113,10 @@ public class ManagerRetail extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
         jLabel1.setText("Manager List");
 
-        jButton1.setText("Add New Item");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        AddNewItem.setText("Add New Item");
+        AddNewItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                AddNewItemActionPerformed(evt);
             }
         });
 
@@ -125,7 +132,7 @@ public class ManagerRetail extends javax.swing.JFrame {
                         .addGap(6, 6, 6)
                         .addComponent(Home)
                         .addGap(77, 77, 77)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(AddNewItem, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
                         .addComponent(Save)))
                 .addContainerGap())
@@ -144,7 +151,7 @@ public class ManagerRetail extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Save)
                     .addComponent(Home)
-                    .addComponent(jButton1))
+                    .addComponent(AddNewItem))
                 .addContainerGap())
         );
 
@@ -167,19 +174,24 @@ public class ManagerRetail extends javax.swing.JFrame {
             System.out.println(name);
             System.out.println(quantity);
         }
-        
+        Refresh();
         
     }//GEN-LAST:event_SaveActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
-        new NewItem().setVisible(true);  
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HomeActionPerformed
         this.dispose();
         new MainPage().setVisible(true);
     }//GEN-LAST:event_HomeActionPerformed
+
+    private void AddNewItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddNewItemActionPerformed
+            Click click = new Click() {
+                @Override
+                public void onClick() {
+                    Refresh();
+                }
+            };
+            new NewItem(click).setVisible(true);
+    }//GEN-LAST:event_AddNewItemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -212,18 +224,15 @@ public class ManagerRetail extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> {
             
             new ManagerRetail().setVisible(true);
-            
         });
-        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton AddNewItem;
     private javax.swing.JButton Home;
     private javax.swing.JButton Save;
     private javax.swing.JTable Table;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
 }

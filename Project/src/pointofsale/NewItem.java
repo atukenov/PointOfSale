@@ -5,21 +5,32 @@
  */
 package pointofsale;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.fxml.FXMLLoader;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import static pointofsale.ManagerRetail.sz;
 
 /**
  *
  * @author AlmazTukenov
  */
 public class NewItem extends javax.swing.JFrame {
-
     private static Database db = Base.db;
+    private ManagerRetail.Click click;
     /**
      * Creates new form NewItem
      */
-    public NewItem() {
+    public NewItem(ManagerRetail.Click click) {
+        this.click = click;
         initComponents();
+        
     }
+
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -124,6 +135,7 @@ public class NewItem extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
         String check = jTextField1.getText();
         String check1 = jTextField5.getText();
         String check2 = jTextField6.getText();
@@ -141,9 +153,11 @@ public class NewItem extends javax.swing.JFrame {
         db.addItem(id, name, quantity, price);
         this.dispose();
         }
+        click.onClick();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -173,13 +187,12 @@ public class NewItem extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(NewItem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new NewItem().setVisible(true);
-            }
-        });
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new NewItem().setVisible(true);
+//            }
+//        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
