@@ -5,10 +5,14 @@
  */
 package pointofsale;
 
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import javax.swing.JLabel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.util.*;
+import javax.swing.JTable;
+import javax.swing.table.JTableHeader;
 
 /**
  *
@@ -19,6 +23,8 @@ public class ManagerRetail extends javax.swing.JFrame {
     public static int sz = 0;
     private static Database db = Base.db;
     private static DefaultTableModel model;
+
+
     interface Click {
         void onClick();
     }
@@ -28,8 +34,11 @@ public class ManagerRetail extends javax.swing.JFrame {
    
     public static void Refresh()
     {
+        db.Sort();
         ArrayList<Integer> list = db.getList();
-        for (int i = sz; i < list.size(); ++i)
+        model.getDataVector().removeAllElements();
+        sz = 0;
+        for (int i = 0; i < list.size(); ++i)
         {
             int id = list.get(i);
             String name = db.getItemName(id);
@@ -37,7 +46,7 @@ public class ManagerRetail extends javax.swing.JFrame {
             int quantity = db.getQuantity(id);
             model.addRow(new Object[] {id, name, quantity, price1});
             sz++;
-        }     
+        }   
     }
     
     public ManagerRetail() {
@@ -50,6 +59,46 @@ public class ManagerRetail extends javax.swing.JFrame {
         Table.getColumnModel().getColumn(3).setCellRenderer( centerRenderer );
         model = (DefaultTableModel) Table.getModel();
         sz = 0;
+        JTableHeader header = Table.getTableHeader();
+        header.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+               int index = header.columnAtPoint(e.getPoint());
+               if (index == 0)
+                   db.sorting_type = "id";
+               if (index == 1)
+                   db.sorting_type = "name";
+               if (index == 2)
+                   db.sorting_type = "quantity";
+               if (index == 3)
+                   db.sorting_type = "price";
+               
+               db.Sort();
+               sz = 0;
+               Refresh();
+               System.out.println("sort " + index);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+           
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        
+        });
+        
         Refresh();
     }
     
@@ -72,6 +121,12 @@ public class ManagerRetail extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jScrollPane2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jScrollPane2MouseClicked(evt);
+            }
+        });
+
         Table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -86,6 +141,11 @@ public class ManagerRetail extends javax.swing.JFrame {
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+        });
+        Table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TableMouseClicked(evt);
             }
         });
         jScrollPane2.setViewportView(Table);
@@ -158,7 +218,10 @@ public class ManagerRetail extends javax.swing.JFrame {
         setSize(new java.awt.Dimension(450, 432));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    
+    
+    
     private void SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveActionPerformed
         
         for (int i = 0; i < sz; ++i)
@@ -192,6 +255,23 @@ public class ManagerRetail extends javax.swing.JFrame {
             };
             new NewItem(click).setVisible(true);
     }//GEN-LAST:event_AddNewItemActionPerformed
+
+    private void jScrollPane2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane2MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jScrollPane2MouseClicked
+
+    
+    private void TableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableMouseClicked
+        // TODO add your handling code here:
+        int x = Table.rowAtPoint(evt.getPoint());
+        int y = Table.columnAtPoint(evt.getPoint());
+        
+        if (x == 0 && y == 2)
+        {
+            db.sorting_type = "name";
+            db.Sort();
+        }
+    }//GEN-LAST:event_TableMouseClicked
 
     /**
      * @param args the command line arguments
