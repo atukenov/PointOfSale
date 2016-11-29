@@ -84,7 +84,7 @@ public class Retail extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setText("ID of Items");
+        jLabel2.setText("Name of Items");
 
         jLabel3.setText("Quantity");
 
@@ -154,23 +154,30 @@ public class Retail extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(InputName, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(42, 42, 42)
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(46, 46, 46)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(15, 15, 15)
+                                .addComponent(jLabel3)
+                                .addGap(162, 162, 162))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(QuantityInput, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(AddButton)
+                                .addGap(19, 19, 19))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
                                 .addGap(348, 348, 348)
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(Total))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(75, 75, 75)
-                                .addComponent(jLabel2)
-                                .addGap(78, 78, 78)
-                                .addComponent(jLabel3))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(46, 46, 46)
-                                .addComponent(InputName, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(18, 18, 18)
-                                .addComponent(QuantityInput, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(50, 50, 50)
-                                .addComponent(AddButton)
-                                .addGap(27, 27, 27))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(155, 155, 155)
                                 .addComponent(jLabel1))
@@ -191,10 +198,8 @@ public class Retail extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(QuantityInput)
-                    .addComponent(AddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addComponent(InputName)))
+                    .addComponent(InputName)
+                    .addComponent(AddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -231,10 +236,11 @@ public class Retail extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Invalid ID", "DIBAT", JOptionPane.INFORMATION_MESSAGE);
         } else
         {
-            if (quantity > db.getQuantity(id))
+            if (quantity > db.getQuantity(id) && quantity > 0)
             {
-                JOptionPane.showMessageDialog(null, "Invalid Quantity\n" + db.getQuantity(id) + (db.getQuantity(id) > 1 ? "items" : "item") + " left in Storage", "DIBAT", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Invalid Quantity\n" + db.getQuantity(id) + (db.getQuantity(id) > 1 ? " items" : "item") + " left in Storage", "DIBAT", JOptionPane.INFORMATION_MESSAGE);
             } else
+            if (quantity <= db.getQuantity(id) && quantity > 0)
             {
                 double price1 = db.getPrice(id);
                 model.addRow(new Object[] {id, name, quantity, quantity * price1});

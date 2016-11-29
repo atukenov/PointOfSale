@@ -193,7 +193,7 @@ public class ManagerRetail extends javax.swing.JFrame {
                         .addComponent(Home)
                         .addGap(77, 77, 77)
                         .addComponent(AddNewItem, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
+                        .addGap(83, 83, 83)
                         .addComponent(Save)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
@@ -262,15 +262,7 @@ public class ManagerRetail extends javax.swing.JFrame {
 
     
     private void TableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableMouseClicked
-        // TODO add your handling code here:
-        int x = Table.rowAtPoint(evt.getPoint());
-        int y = Table.columnAtPoint(evt.getPoint());
-        
-        if (x == 0 && y == 2)
-        {
-            db.sorting_type = "name";
-            db.Sort();
-        }
+
     }//GEN-LAST:event_TableMouseClicked
 
     /**

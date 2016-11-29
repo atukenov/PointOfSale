@@ -17,8 +17,11 @@ public class Database {
 	}
 	
 	public void addItem(int ID, String itemName, int quantity, double price) {
-		db.add(new itemList(ID, quantity, itemName, price));
+            if (quantity < 1 || price <= 0.0 || ID <= 9999)
+                return;
+            db.add(new itemList(ID, quantity, itemName, price));
                 //Sort();
+                
 	}
         
         public void Sort() {
