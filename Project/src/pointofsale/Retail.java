@@ -19,6 +19,7 @@ public class Retail extends javax.swing.JFrame {
     private static double sum = 0;
     private static int sz = 0;
     private static Database db = Base.db;
+    private static DefaultTableModel model;
     
     public Retail() {
         initComponents();
@@ -63,6 +64,7 @@ public class Retail extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         InputName = new javax.swing.JComboBox<>();
+        DeleteItem = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -140,6 +142,13 @@ public class Retail extends javax.swing.JFrame {
             }
         });
 
+        DeleteItem.setText("Delete Item");
+        DeleteItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeleteItemActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -150,6 +159,8 @@ public class Retail extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(DeleteItem)
+                        .addGap(49, 49, 49)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -158,8 +169,7 @@ public class Retail extends javax.swing.JFrame {
                                 .addComponent(InputName, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(42, 42, 42)
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(jLabel2)))
                         .addGap(46, 46, 46)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -184,7 +194,7 @@ public class Retail extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(1, 1, 1)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -209,7 +219,8 @@ public class Retail extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
-                    .addComponent(jButton1))
+                    .addComponent(jButton1)
+                    .addComponent(DeleteItem))
                 .addContainerGap())
         );
 
@@ -222,12 +233,13 @@ public class Retail extends javax.swing.JFrame {
     }//GEN-LAST:event_QuantityInputActionPerformed
 
     private void AddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddButtonActionPerformed
+        DecimalFormat dec = new DecimalFormat("#0.00");
         String name = (String) InputName.getSelectedItem();
         int quantity = Integer.parseInt(QuantityInput.getText());
         
         QuantityInput.setText("");
         //Database db = new Database();
-        DefaultTableModel model = (DefaultTableModel) Table.getModel(); 
+        model = (DefaultTableModel) Table.getModel(); 
         
         int id = db.getID(name);
         
@@ -242,8 +254,18 @@ public class Retail extends javax.swing.JFrame {
             } else
             if (quantity <= db.getQuantity(id) && quantity > 0)
             {
+                boolean ok = false;
                 double price1 = db.getPrice(id);
-                model.addRow(new Object[] {id, name, quantity, quantity * price1});
+                int size = model.getRowCount();
+                for (int i = 0; i < size; ++i)
+                    if ((int)model.getValueAt(i, 0) == id)
+                    {
+                        model.setValueAt((int)(quantity + (int)model.getValueAt(i, 2)), i, 2);
+                        model.setValueAt(dec.format((int)model.getValueAt(i, 2) * price1), i, 3);
+                        ok = true;
+                    }
+                if (!ok)
+                    model.addRow(new Object[] {id, name, quantity, quantity * price1, "X"});
                 db.decreaseQuantity(id, quantity);
                 sum += price1 * quantity;
                 Total.setText("$" + new DecimalFormat("##.##").format(sum));
@@ -265,6 +287,18 @@ public class Retail extends javax.swing.JFrame {
     private void InputNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InputNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_InputNameActionPerformed
+
+    private void DeleteItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteItemActionPerformed
+        int index = Table.getSelectedRow();
+        int id = (int)Table.getValueAt(index, 0);
+        int quantity = (int)Table.getValueAt(index, 2);
+        model.removeRow(index);
+        double price = quantity * db.getPrice(id);
+        quantity += db.getQuantity(id);
+        db.setQuantity(id, quantity);
+        sum -= price;
+        Total.setText("$" + new DecimalFormat("##.##").format(sum));
+    }//GEN-LAST:event_DeleteItemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -303,6 +337,7 @@ public class Retail extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddButton;
+    private javax.swing.JButton DeleteItem;
     private javax.swing.JComboBox<String> InputName;
     private javax.swing.JTextField QuantityInput;
     private javax.swing.JTable Table;
