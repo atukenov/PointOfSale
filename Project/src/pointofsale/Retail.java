@@ -17,6 +17,7 @@ import javax.swing.text.TableView;
 public class Retail extends javax.swing.JFrame {
     
     private static double sum = 0;
+    private static boolean check = false;
     private static int sz = 0;
     private static Database db = Base.db;
     private static DefaultTableModel model;
@@ -275,13 +276,28 @@ public class Retail extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         //setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        if (!check)
+        {
+            int sz = Table.getRowCount();
+            for (int i = 0; i < sz; ++i)
+            {
+                int id = (int)Table.getValueAt(i, 0);
+                int quantity = (int)Table.getValueAt(i, 2);
+                model.removeRow(i);
+                double price = quantity * db.getPrice(id);
+                quantity += db.getQuantity(id);
+                db.setQuantity(id, quantity);
+                sum -= price;
+                Total.setText("$" + new DecimalFormat("##.##").format(sum));
+            }
+        }
         this.dispose();
-        new MainPage().setVisible(true);        // TODO add your handling code here:
+        new MainPage().setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         JOptionPane.showMessageDialog(null, "Completed", "DIBAT", JOptionPane.INFORMATION_MESSAGE);
-        
+        check = true;
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void InputNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InputNameActionPerformed

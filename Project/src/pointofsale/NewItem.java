@@ -152,9 +152,13 @@ public class NewItem extends javax.swing.JFrame {
         String name = jTextField5.getText();
         int quantity = Integer.parseInt(jTextField6.getText());
         double price = Double.parseDouble(jTextField7.getText());
-        
-        db.addItem(id, name, quantity, price);
-        this.dispose();
+        if (db.getItemName(id) != "-1")
+            JOptionPane.showMessageDialog(null, "Duplicate ID", "DIBAT", JOptionPane.INFORMATION_MESSAGE);
+        else
+        {
+            db.addItem(id, name, quantity, price);
+            this.dispose();
+        }
         }
         click.onClick();
     }//GEN-LAST:event_jButton1ActionPerformed
